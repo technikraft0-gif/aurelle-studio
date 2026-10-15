@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#F7F2EA" />
+  <meta name="description" content="Sign in to the Aurelle Studio administration panel." />
+  <title>Sign in — Aurelle Studio</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <script src="assets/tailwind-config.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="assets/styles.css" />
+
+  <style>
+    .login-layout {
+      min-height: 100vh;
+      min-height: 100dvh;
+    }
+
+    .login-input-wrap {
+      position: relative;
+    }
+
+    .login-input-wrap > svg {
+      position: absolute;
+      top: 50%;
+      left: 14px;
+      width: 18px;
+      height: 18px;
+      color: #94867B;
+      transform: translateY(-50%);
+      pointer-events: none;
+    }
+
+    .login-input-wrap .field {
+      padding-left: 43px;
+    }
+
+    .password-input {
+      padding-right: 48px !important;
+    }
+
+    .password-toggle {
+      position: absolute;
+      top: 50%;
+      right: 7px;
+      display: inline-flex;
+      width: 36px;
+      height: 36px;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      color: #82746A;
+      transform: translateY(-50%);
+    }
+
+    .password-toggle:hover {
+      background: #F7F2EA;
+      color: #2A1F1A;
+    }
+
+    .demo-account {
+      display: flex;
+      min-height: 60px;
+      align-items: center;
+      gap: 12px;
+      border: 1px solid #E4DCD1;
+      border-radius: 12px;
+      background: #fff;
+      padding: 10px 12px;
+      text-align: left;
+      transition: border-color .16s ease, background .16s ease;
+    }
+
+    .demo-account:hover {
+      border-color: #B5654A;
+      background: #FFFCF8;
+    }
+
+    .demo-account:focus-visible {
+      outline: 2px solid #B5654A;
+      outline-offset: 2px;
+    }
+
+    .demo-account .demo-icon {
+      display: flex;
+      width: 36px;
+      height: 36px;
+      flex: 0 0 auto;
+      align-items: center;
+      justify-content: center;
+      border-radius: 10px;
+      background: #EFE7DB;
+      color: #6B5E55;
+    }
+
+    .login-submit:disabled {
+      cursor: wait;
+      opacity: .8;
+    }
+
+    @media (min-width: 1024px) {
+      .login-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1.05fr) minmax(480px, .95fr);
+      }
+    }
+  </style>
+</head>
+
+<body class="bg-ivory">
+  <main class="login-layout">
+    <!-- Brand panel -->
+    <section class="login-art relative hidden min-h-screen flex-col justify-between p-12 text-ivory lg:flex xl:p-16">
+      <a href="login.html" class="relative z-10 inline-flex w-fit items-center gap-3" aria-label="Aurelle Studio home">
+        <span class="flex h-12 w-12 items-center justify-center rounded-2xl border border-white/20 bg-white/10 font-display text-2xl font-semibold">A</span>
+        <span>
+          <span class="block font-display text-3xl font-semibold leading-none">Aurelle</span>
+          <span class="mt-1 block text-[10px] font-semibold uppercase tracking-[.23em] text-ivory/60">Studio administration</span>
+        </span>
+      </a>
+
+      <div class="relative z-10 max-w-xl pb-8">
+        <span class="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-[10px] font-bold uppercase tracking-[.16em] text-ivory/90">
+          <span class="h-1.5 w-1.5 rounded-full bg-gold"></span>
+          Thoughtful retail, beautifully managed
+        </span>
+
+        <h1 class="mt-7 font-display text-6xl font-medium leading-[.99] tracking-tight xl:text-7xl">
+          Good taste.<br />
+          <span class="italic text-[#D6B98A]">Good business.</span>
+        </h1>
+
+        <p class="mt-6 max-w-md text-sm leading-7 text-ivory/70">
+          A calmer way to run your store. Keep your collection, customers and day-to-day operations beautifully in order.
+        </p>
+
+        <div class="mt-10 flex items-center gap-4 border-t border-white/15 pt-6">
+          <div class="flex -space-x-2">
+            <span class="flex h-9 w-9 items-center justify-center rounded-full border-2 border-[#443128] bg-[#E3C7B2] text-[10px] font-bold text-[#593D30]">NA</span>
+            <span class="flex h-9 w-9 items-center justify-center rounded-full border-2 border-[#443128] bg-[#C9A66B] text-[10px] font-bold text-[#453126]">TM</span>
+            <span class="flex h-9 w-9 items-center justify-center rounded-full border-2 border-[#443128] bg-[#D5D6C4] text-[10px] font-bold text-[#3F4936]">IO</span>
+          </div>
+          <p class="text-xs leading-5 text-ivory/65">
+            Designed for the people<br />behind every great customer experience.
+          </p>
+        </div>
+      </div>
+
+      <div class="relative z-10 flex items-center justify-between gap-4 text-[10px] text-ivory/50">
+        <span>© <span id="brand-year"></span> Aurelle Studio</span>
+        <span>Considered in every detail.</span>
+      </div>
+
+      <div class="pointer-events-none absolute bottom-28 right-16 hidden h-44 w-44 rounded-full border border-white/10 xl:block"></div>
+      <div class="pointer-events-none absolute bottom-36 right-24 hidden h-28 w-28 rounded-full border border-white/10 xl:block"></div>
+    </section>
+
+    <!-- Sign-in panel -->
+    <section class="flex min-h-screen min-h-[100dvh] items-center justify-center px-5 py-10 sm:px-8 lg:px-12">
+      <div class="w-full max-w-[430px]">
+        <a href="login.html" class="mb-9 inline-flex items-center gap-3 lg:hidden">
+          <span class="flex h-11 w-11 items-center justify-center rounded-xl bg-espresso font-display text-2xl font-semibold text-ivory">A</span>
+          <span>
+            <span class="block font-display text-2xl font-semibold leading-none">Aurelle</span>
+            <span class="mt-1 block text-[9px] font-bold uppercase tracking-[.2em] text-espresso-soft">Studio admin</span>
+          </span>
+        </a>
+
+        <div class="mb-8">
+          <p class="mb-3 text-[10px] font-bold uppercase tracking-[.19em] text-clay">Welcome back</p>
+          <h2 class="font-display text-4xl font-semibold tracking-tight sm:text-[44px]">Sign in to your store.</h2>
+          <p class="mt-3 text-sm leading-6 text-espresso-soft">Enter your account details to continue to your workspace.</p>
+        </div>
+
+        <div id="login-error" class="mb-5 hidden rounded-xl border border-[#E7B9B1] bg-danger-bg px-4 py-3 text-sm text-[#8E382F]" role="alert" aria-live="assertive"></div>
+
+        <form id="login-form" novalidate>
+          <div class="mb-5">
+            <label class="field-label" for="email">Email address</label>
+            <div class="login-input-wrap">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="3" y="5" width="18" height="14" rx="2"></rect>
+                <path d="m3 7 9 6 9-6"></path>
+              </svg>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                inputmode="email"
+                autocomplete="username"
+                class="field"
+                placeholder="you@aurellestudio.com"
+                required
+                aria-describedby="email-error"
+              />
+            </div>
+            <p id="email-error" class="mt-1 hidden text-xs text-danger"></p>
+          </div>
+
+          <div class="mb-4">
+            <div class="mb-2 flex items-center justify-between gap-3">
+              <label class="field-label !mb-0" for="password">Password</label>
+              <span class="text-[10px] text-espresso-soft">Demo environment</span>
+            </div>
+
+            <div class="login-input-wrap">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="4" y="10" width="16" height="11" rx="2"></rect>
+                <path d="M8 10V7a4 4 0 0 1 8 0v3"></path>
+              </svg>
+              <input
+                id="password"
+                name="password"
+                type="password"
+                autocomplete="current-password"
+                class="field password-input"
+                placeholder="Enter your password"
+                required
+                minlength="6"
+                aria-describedby="password-error"
+              />
+              <button type="button" id="toggle-password" class="password-toggle" aria-label="Show password" aria-pressed="false">
+                <svg id="password-eye-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"></path>
+                  <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+              </button>
+            </div>
+            <p id="password-error" class="mt-1 hidden text-xs text-danger"></p>
+          </div>
+
+          <div class="mb-6 flex items-center justify-between gap-4">
+            <label class="inline-flex min-h-8 cursor-pointer items-center gap-2 text-xs text-espresso-soft">
+              <input id="remember" name="remember" type="checkbox" checked class="h-4 w-4 rounded border-line accent-clay" />
+              Remember me
+            </label>
+            <span class="text-[10px] text-espresso-soft">Password: <strong class="text-espresso">aurelle123</strong></span>
+          </div>
+
+          <button id="login-submit" type="submit" class="login-submit btn btn-primary w-full !min-h-[48px]">
+            <span id="login-submit-label">Sign in</span>
+            <svg id="login-spinner" class="hidden animate-spin" width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-opacity=".25" stroke-width="3"></circle>
+              <path d="M21 12a9 9 0 0 0-9-9" stroke="currentColor" stroke-width="3" stroke-linecap="round"></path>
+            </svg>
+          </button>
+        </form>
+
+        <div class="my-7 flex items-center gap-3">
+          <div class="h-px flex-1 bg-line"></div>
+          <span class="text-[10px] font-bold uppercase tracking-[.14em] text-espresso-soft">Or use a demo account</span>
+          <div class="h-px flex-1 bg-line"></div>
+        </div>
+
+        <div class="space-y-2">
+          <button type="button" class="demo-account w-full" data-demo-role="Admin" data-demo-email="admin@aurelle.demo">
+            <span class="demo-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M12 3 20 7v5c0 5-3.4 8-8 9-4.6-1-8-4-8-9V7l8-4Z"></path>
+                <path d="m9 12 2 2 4-4"></path>
+              </svg>
+            </span>
+            <span class="min-w-0 flex-1">
+              <span class="block text-xs font-bold">Admin</span>
+              <span class="mt-1 block truncate text-[10px] text-espresso-soft">Full access to the store</span>
+            </span>
+            <span class="text-[10px] font-bold text-clay">Use account →</span>
+          </button>
+
+          <button type="button" class="demo-account w-full" data-demo-role="Cashier" data-demo-email="cashier@aurelle.demo">
+            <span class="demo-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="3" y="5" width="18" height="15" rx="2"></rect>
+                <path d="M3 10h18M7 15h4"></path>
+              </svg>
+            </span>
+            <span class="min-w-0 flex-1">
+              <span class="block text-xs font-bold">Cashier</span>
+              <span class="mt-1 block truncate text-[10px] text-espresso-soft">Orders and own sales</span>
+            </span>
+            <span class="text-[10px] font-bold text-clay">Use account →</span>
+          </button>
+
+          <button type="button" class="demo-account w-full" data-demo-role="Sales Attendant" data-demo-email="attendant@aurelle.demo">
+            <span class="demo-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M6 7h12l1 14H5L6 7Z"></path>
+                <path d="M9 7a3 3 0 0 1 6 0"></path>
+              </svg>
+            </span>
+            <span class="min-w-0 flex-1">
+              <span class="block text-xs font-bold">Sales Attendant</span>
+              <span class="mt-1 block truncate text-[10px] text-espresso-soft">Products, stock editing and orders</span>
+            </span>
+            <span class="text-[10px] font-bold text-clay">Use account →</span>
+          </button>
+        </div>
+
+        <p class="mt-7 text-center text-[10px] leading-5 text-espresso-soft">
+          This front-end demo stores mock data in your browser.<br />
+          Do not enter real passwords or sensitive information.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <script src="assets/data.js"></script>
+  <script src="assets/store.js"></script>
+  <script src="assets/auth.js"></script>
+
+  <script>
+    (() => {
+      "use strict";
+
+      const form = document.getElementById("login-form");
+      const emailInput = document.getElementById("email");
+      const passwordInput = document.getElementById("password");
+      const rememberInput = document.getElementById("remember");
+      const submit = document.getElementById("login-submit");
+      const submitLabel = document.getElementById("login-submit-label");
+      const spinner = document.getElementById("login-spinner");
+      const errorBox = document.getElementById("login-error");
+
+      document.getElementById("brand-year").textContent = new Date().getFullYear();
+
+      document.querySelectorAll("[data-demo-email]").forEach((button) => {
+        button.addEventListener("click", () => {
+          emailInput.value = button.dataset.demoEmail;
+          passwordInput.value = "aurelle123";
+          clearErrors();
+          emailInput.focus();
+        });
+      });
+
+      document.getElementById("toggle-password").addEventListener("click", (event) => {
+        const button = event.currentTarget;
+        const showing = passwordInput.type === "text";
+        passwordInput.type = showing ? "password" : "text";
+        button.setAttribute("aria-label", showing ? "Show password" : "Hide password");
+        button.setAttribute("aria-pressed", String(!showing));
+
+        document.getElementById("password-eye-icon").innerHTML = showing
+          ? '<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"></path><circle cx="12" cy="12" r="3"></circle>'
+          : '<path d="m3 3 18 18"></path><path d="M10.6 10.6a2 2 0 0 0 2.8 2.8"></path><path d="M9.9 5.2A10.8 10.8 0 0 1 12 5c6.5 0 10 7 10 7a14.4 14.4 0 0 1-3.1 3.8"></path><path d="M6.2 6.2A15.4 15.4 0 0 0 2 12s3.5 7 10 7a10.8 10.8 0 0 0 4-.8"></path>';
+      });
+
+      function clearErrors() {
+        errorBox.classList.add("hidden");
+        errorBox.textContent = "";
+
+        ["email", "password"].forEach((name) => {
+          const input = document.getElementById(name);
+          const error = document.getElementById(`${name}-error`);
+          input.removeAttribute("aria-invalid");
+          error.classList.add("hidden");
+          error.textContent = "";
+        });
+      }
+
+      function fieldError(name, message) {
+        const input = document.getElementById(name);
+        const error = document.getElementById(`${name}-error`);
+        input.setAttribute("aria-invalid", "true");
+        error.textContent = message;
+        error.classList.remove("hidden");
+      }
+
+      function setLoading(loading) {
+        submit.disabled = loading;
+        submitLabel.textContent = loading ? "Signing in..." : "Sign in";
+        spinner.classList.toggle("hidden", !loading);
+      }
+
+      emailInput.addEventListener("input", clearErrors);
+      passwordInput.addEventListener("input", clearErrors);
+
+      form.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        clearErrors();
+
+        const email = emailInput.value.trim();
+        const password = passwordInput.value;
+        let valid = true;
+
+        if (!email) {
+          fieldError("email", "Enter your email address.");
+          valid = false;
+        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+          fieldError("email", "Enter a valid email address.");
+          valid = false;
+        }
+
+        if (!password) {
+          fieldError("password", "Enter your password.");
+          valid = false;
+        }
+
+        if (!valid) return;
+
+        setLoading(true);
+
+        // Simulate a short authentication request for a more realistic demo.
+        await new Promise((resolve) => window.setTimeout(resolve, 450));
+
+        const result = Auth.login(email, password, rememberInput.checked);
+        setLoading(false);
+
+        if (!result.ok) {
+          errorBox.textContent = result.message;
+          errorBox.classList.remove("hidden");
+          passwordInput.focus();
+          return;
+        }
+
+        window.location.href = "dashboard.html";
+      });
+    })();
+  </script>
+</body>
+</html>

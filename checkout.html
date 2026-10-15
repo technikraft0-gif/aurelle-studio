@@ -1,0 +1,55 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Enter delivery details for your Aurelle Studio order.">
+  <title>Checkout | Aurelle Studio</title>
+  <link rel="stylesheet" href="assets/storefront.css"><script src="assets/pages/storefront.js" defer></script>
+</head>
+<body>
+  <div class="announcement">A thoughtful wardrobe begins here</div>
+  <header class="site-header"><div class="container header-inner">
+    <a class="brand" href="index.html">AURELLE<small>STUDIO</small></a><span class="eyebrow">Secure checkout preview</span><a class="text-link" href="cart.html">← Back to bag</a>
+  </div></header>
+  <main>
+    <section class="page-hero"><div class="container"><span class="eyebrow">Almost yours</span><h1>Checkout.</h1><p>Confirm your details before completing this demo order.</p></div></section>
+    <section class="page-content"><div class="container checkout-layout">
+      <form data-checkout-form>
+        <section class="checkout-section"><h2>Contact information</h2><div class="form-grid">
+          <div class="field full-width"><label for="email">Email address *</label><input id="email" name="email" type="email" autocomplete="email" required placeholder="you@example.com"></div>
+          <div class="field"><label for="first-name">First name *</label><input id="first-name" name="firstName" autocomplete="given-name" required></div>
+          <div class="field"><label for="last-name">Last name *</label><input id="last-name" name="lastName" autocomplete="family-name" required></div>
+          <div class="field full-width"><label for="phone">Phone number *</label><input id="phone" name="phone" type="tel" autocomplete="tel" required placeholder="+234"></div>
+        </div></section>
+        <section class="checkout-section"><h2>Delivery address</h2><div class="form-grid">
+          <div class="field full-width"><label for="address">Street address *</label><input id="address" name="address" autocomplete="street-address" required></div>
+          <div class="field"><label for="city">City *</label><input id="city" name="city" autocomplete="address-level2" required></div>
+          <div class="field"><label for="state">State *</label><input id="state" name="state" autocomplete="address-level1" required></div>
+          <div class="field"><label for="postal">Postal code</label><input id="postal" name="postalCode" autocomplete="postal-code"></div>
+          <div class="field"><label for="country">Country *</label><select id="country" name="country" required><option value="Nigeria">Nigeria</option><option value="Ghana">Ghana</option><option value="Other">Other</option></select></div>
+          <div class="field full-width"><label for="delivery-note">Delivery note (optional)</label><textarea id="delivery-note" name="deliveryNote" placeholder="Landmarks or delivery instructions"></textarea></div>
+        </div></section>
+        <section class="checkout-section"><h2>Delivery method</h2>
+          <label class="radio-card"><input type="radio" name="delivery" value="standard" checked><span><strong>Standard delivery</strong><span>Delivery fee shown in your order summary.</span></span></label>
+        </section>
+        <section class="checkout-section"><h2>Payment method</h2>
+          <label class="radio-card"><input type="radio" name="payment" value="pay-on-delivery" checked><span><strong>Pay on delivery — demo only</strong><span>No payment is taken. Connect a verified payment provider before launch.</span></span></label>
+          <label class="radio-card"><input type="radio" name="payment" value="bank-transfer"><span><strong>Bank transfer — demo only</strong><span>No transfer instructions or payment confirmation are generated here.</span></span></label>
+        </section>
+        <label class="radio-card"><input type="checkbox" name="termsAccepted" required><span><strong>I agree to the store terms *</strong><span>Read the <a class="text-link" href="terms.html">Terms of Service</a> and <a class="text-link" href="privacy.html">Privacy Policy</a>.</span></span></label>
+        <button class="button full" type="submit" data-place-order>Place demo order</button>
+        <p class="form-note">This prototype stores a demo order in this browser only. It does not submit your details to a server.</p>
+      </form>
+      <aside class="summary-card"><h2>Your order</h2><div data-checkout-items></div>
+        <div class="summary-line"><span>Subtotal</span><strong data-subtotal>₦0</strong></div>
+        <div class="summary-line"><span>Delivery</span><strong data-shipping>Free</strong></div>
+        <div class="summary-line total"><span>Total</span><strong data-total>₦0</strong></div>
+        <a class="text-link" href="cart.html">Edit bag</a>
+      </aside>
+    </div></section>
+  </main>
+  <footer class="site-footer"><div class="container"><div class="footer-bottom"><span>© <span data-year></span> Aurelle Studio</span><span><a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a></span></div></div></footer>
+  <script>document.querySelector("[data-year]").textContent = new Date().getFullYear();</script>
+</body>
+</html>

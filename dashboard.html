@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#F7F2EA" />
+  <meta name="description" content="Aurelle Studio store performance dashboard." />
+  <title>Dashboard — Aurelle Studio</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <script src="assets/tailwind-config.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="assets/styles.css" />
+
+  <script>
+    window.AURELLE_PAGE = {
+      key: "dashboard",
+      title: "Dashboard",
+      subtitle: "A considered view of your store."
+    };
+  </script>
+
+  <style>
+    .range-button {
+      min-height: 34px;
+      border-radius: 999px;
+      padding: 0 12px;
+      color: #82746A;
+      font-size: 11px;
+      font-weight: 700;
+      transition: background .15s ease, color .15s ease;
+    }
+
+    .range-button:hover {
+      background: #EFE7DB;
+      color: #2A1F1A;
+    }
+
+    .range-button.active {
+      background: #2A1F1A;
+      color: #F7F2EA;
+    }
+
+    .category-track {
+      height: 6px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: #F0EAE2;
+    }
+
+    .category-track > span {
+      display: block;
+      height: 100%;
+      border-radius: inherit;
+      background: #B5654A;
+    }
+
+    .category-track.gold > span {
+      background: #C9A66B;
+    }
+
+    .category-track.espresso > span {
+      background: #2A1F1A;
+    }
+
+    .category-track.tan > span {
+      background: #D6B99B;
+    }
+
+    .dashboard-skeleton {
+      min-height: 120px;
+    }
+
+    @media (max-width: 639px) {
+      .dashboard-greeting {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="app-shell">
+    <div id="app-sidebar"></div>
+
+    <div class="main-area">
+      <div id="app-topbar"></div>
+
+      <main id="app-content" class="page-content">
+        <!-- Greeting -->
+        <section class="dashboard-greeting mb-7 flex items-end justify-between gap-5">
+          <div>
+            <p id="dashboard-date" class="mb-2 text-xs font-medium text-espresso-soft"></p>
+            <h2 id="dashboard-greeting" class="font-display text-3xl font-semibold tracking-tight sm:text-4xl">Good morning.</h2>
+            <p class="mt-2 text-sm text-espresso-soft">Here's what's happening with your store.</p>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <label class="sr-only" for="date-range">Dashboard date range</label>
+            <select id="date-range" class="field !min-h-[42px] !w-auto !rounded-full !py-2 text-xs font-semibold">
+              <option value="today">Today</option>
+              <option value="7d" selected>Last 7 days</option>
+              <option value="30d">Last 30 days</option>
+              <option value="year">This year</option>
+            </select>
+            <button type="button" id="refresh-dashboard" class="icon-btn border border-line bg-white" aria-label="Refresh dashboard" title="Refresh dashboard">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M20 7v5h-5"></path><path d="M4 17v-5h5"></path><path d="M5.5 9a7 7 0 0 1 12-2L20 12"></path><path d="M4 12l2.5 5a7 7 0 0 0 12-2"></path>
+              </svg>
+            </button>
+          </div>
+        </section>
+
+        <!-- KPI row -->
+        <section aria-label="Store key performance indicators" class="mobile-kpi-row mb-6 grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
+          <article class="card kpi-card">
+            <div class="flex items-start justify-between gap-3">
+              <div class="text-xs font-semibold text-espresso-soft">Revenue</div>
+              <span class="flex h-9 w-9 items-center justify-center rounded-xl bg-[#F4E4DE] text-clay">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M3 3v18h18"></path><path d="m7 14 4-4 4 3 6-7"></path>
+                </svg>
+              </span>
+            </div>
+            <div id="kpi-revenue" class="kpi-value mt-4">—</div>
+            <div class="mt-3 flex items-center justify-between gap-2">
+              <span id="kpi-revenue-trend" class="text-[10px] font-bold text-success">—</span>
+              <svg class="sparkline" data-spark="revenue" viewBox="0 0 88 32" aria-hidden="true"></svg>
+            </div>
+            <p class="mt-1 text-[10px] text-espresso-soft">vs. previous period</p>
+          </article>
+
+          <article class="card kpi-card">
+            <div class="flex items-start justify-between gap-3">
+              <div class="text-xs font-semibold text-espresso-soft">Orders</div>
+              <span class="flex h-9 w-9 items-center justify-center rounded-xl bg-[#F6EBCF] text-[#8B6B2C]">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M6 7h12l1 14H5L6 7Z"></path><path d="M9 7a3 3 0 0 1 6 0"></path>
+                </svg>
+              </span>
+            </div>
+            <div id="kpi-orders" class="kpi-value mt-4">—</div>
+            <div class="mt-3 flex items-center justify-between gap-2">
+              <span id="kpi-orders-trend" class="text-[10px] font-bold text-success">—</span>
+              <svg class="sparkline" data-spark="orders" viewBox="0 0 88 32" aria-hidden="true"></svg>
+            </div>
+            <p class="mt-1 text-[10px] text-espresso-soft">vs. previous period</p>
+          </article>
+
+          <article class="card kpi-card">
+            <div class="flex items-start justify-between gap-3">
+              <div class="text-xs font-semibold text-espresso-soft">Average order value</div>
+              <span class="flex h-9 w-9 items-center justify-center rounded-xl bg-[#ECE6DE] text-espresso-soft">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <rect x="3" y="5" width="18" height="15" rx="2"></rect><path d="M3 10h18M7 15h3"></path>
+                </svg>
+              </span>
+            </div>
+            <div id="kpi-aov" class="kpi-value mt-4">—</div>
+            <div class="mt-3 flex items-center justify-between gap-2">
+              <span id="kpi-aov-trend" class="text-[10px] font-bold text-success">—</span>
+              <svg class="sparkline" data-spark="aov" viewBox="0 0 88 32" aria-hidden="true"></svg>
+            </div>
+            <p class="mt-1 text-[10px] text-espresso-soft">vs. previous period</p>
+          </article>
+
+          <article class="card kpi-card">
+            <div class="flex items-start justify-between gap-3">
+              <div class="text-xs font-semibold text-espresso-soft">New customers</div>
+              <span class="flex h-9 w-9 items-center justify-center rounded-xl bg-[#E3EEE5] text-success">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <circle cx="9" cy="8" r="4"></circle><path d="M2 21a7 7 0 0 1 14 0M19 8v6M16 11h6"></path>
+                </svg>
+              </span>
+            </div>
+            <div id="kpi-customers" class="kpi-value mt-4">—</div>
+            <div class="mt-3 flex items-center justify-between gap-2">
+              <span id="kpi-customers-trend" class="text-[10px] font-bold text-success">—</span>
+              <svg class="sparkline" data-spark="customers" viewBox="0 0 88 32" aria-hidden="true"></svg>
+            </div>
+            <p class="mt-1 text-[10px] text-espresso-soft">vs. previous period</p>
+          </article>
+        </section>
+
+        <!-- Revenue chart and category sales -->
+        <section class="mb-6 grid grid-cols-1 gap-5 xl:grid-cols-[minmax(0,1.65fr)_minmax(280px,1fr)]">
+          <article class="card p-5 sm:p-6">
+            <div class="flex flex-wrap items-start justify-between gap-4">
+              <div>
+                <h3 class="font-display text-2xl font-semibold">Revenue over time</h3>
+                <p class="mt-1 text-xs text-espresso-soft">A look at your store's sales performance.</p>
+              </div>
+              <div class="text-right">
+                <div id="chart-total" class="font-display text-2xl font-semibold">—</div>
+                <div class="mt-1 text-[10px] text-espresso-soft">Selected period</div>
+              </div>
+            </div>
+
+            <div class="mt-5 flex flex-wrap gap-1 rounded-full bg-ivory p-1" aria-label="Chart time range">
+              <button type="button" class="range-button" data-chart-range="today">Today</button>
+              <button type="button" class="range-button active" data-chart-range="7d">7 days</button>
+              <button type="button" class="range-button" data-chart-range="30d">30 days</button>
+              <button type="button" class="range-button" data-chart-range="year">This year</button>
+            </div>
+
+            <div class="mt-5 min-h-[210px]">
+              <svg id="revenue-chart" class="chart-svg" viewBox="0 0 650 235" role="img" aria-label="Revenue line chart"></svg>
+            </div>
+            <div id="chart-footnote" class="mt-3 text-[10px] text-espresso-soft">Based on mock order data.</div>
+          </article>
+
+          <article class="card p-5 sm:p-6">
+            <div class="flex items-start justify-between gap-3">
+              <div>
+                <h3 class="font-display text-2xl font-semibold">Sales by category</h3>
+                <p class="mt-1 text-xs text-espresso-soft">Where customers are spending.</p>
+              </div>
+              <span class="flex h-9 w-9 items-center justify-center rounded-xl bg-cream text-espresso-soft">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M12 3v9h9"></path><path d="M19.5 16A9 9 0 1 1 8 3.5"></path>
+                </svg>
+              </span>
+            </div>
+
+            <div class="my-5 flex items-center justify-center">
+              <div class="relative h-[172px] w-[172px]">
+                <svg id="category-donut" viewBox="0 0 180 180" class="h-full w-full" role="img" aria-label="Donut chart showing sales by category"></svg>
+                <div class="absolute inset-0 flex flex-col items-center justify-center">
+                  <span id="category-count" class="font-display text-3xl font-semibold">—</span>
+                  <span class="mt-1 text-[10px] text-espresso-soft">Units sold</span>
+                </div>
+              </div>
+            </div>
+
+            <div id="category-legend" class="space-y-4"></div>
+          </article>
+        </section>
+
+        <!-- Top products and low-stock alerts -->
+        <section class="mb-6 grid grid-cols-1 gap-5 xl:grid-cols-2">
+          <article class="card">
+            <div class="flex items-start justify-between gap-3 border-b border-line px-5 py-5 sm:px-6">
+              <div>
+                <h3 class="font-display text-2xl font-semibold">Top-selling products</h3>
+                <p class="mt-1 text-xs text-espresso-soft">Your customer favourites.</p>
+              </div>
+              <a href="products.html" class="btn btn-secondary !min-h-[36px] !px-3 text-[10px]">View products</a>
+            </div>
+            <div id="top-products" class="divide-y divide-line px-5 sm:px-6">
+              <div class="skeleton dashboard-skeleton"></div>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="flex items-start justify-between gap-3 border-b border-line px-5 py-5 sm:px-6">
+              <div>
+                <div class="flex flex-wrap items-center gap-2">
+                  <h3 class="font-display text-2xl font-semibold">Low-stock alerts</h3>
+                  <span id="low-stock-count" class="rounded-full bg-warning-bg px-2 py-1 text-[10px] font-bold text-[#785719]">—</span>
+                </div>
+                <p class="mt-1 text-xs text-espresso-soft">A few pieces may need attention.</p>
+              </div>
+              <a href="inventory.html" class="btn btn-secondary !min-h-[36px] !px-3 text-[10px]">View inventory</a>
+            </div>
+            <div id="low-stock-list" class="divide-y divide-line px-5 sm:px-6">
+              <div class="skeleton dashboard-skeleton"></div>
+            </div>
+          </article>
+        </section>
+
+        <!-- Recent orders -->
+        <section class="card mb-6">
+          <div class="flex flex-wrap items-center justify-between gap-3 border-b border-line px-5 py-5 sm:px-6">
+            <div>
+              <h3 class="font-display text-2xl font-semibold">Recent orders</h3>
+              <p class="mt-1 text-xs text-espresso-soft">The latest activity from your store.</p>
+            </div>
+            <a href="orders.html" class="btn btn-secondary !min-h-[38px] !px-4">View all orders <span aria-hidden="true">→</span></a>
+          </div>
+
+          <div class="table-wrap p-3 sm:p-4">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Order</th>
+                  <th>Customer</th>
+                  <th>Date</th>
+                  <th>Payment</th>
+                  <th>Status</th>
+                  <th class="text-right">Total</th>
+                </tr>
+              </thead>
+              <tbody id="recent-orders">
+                <tr><td colspan="6"><div class="skeleton h-12 w-full"></div></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- Quick actions -->
+        <section class="mb-3">
+          <div class="mb-3 flex items-end justify-between gap-3">
+            <div>
+              <h3 class="font-display text-2xl font-semibold">Quick actions</h3>
+              <p class="mt-1 text-xs text-espresso-soft">The things you do most, one tap away.</p>
+            </div>
+          </div>
+          <div id="quick-actions" class="grid grid-cols-2 gap-3 lg:grid-cols-4"></div>
+        </section>
+      </main>
+    </div>
+
+    <div id="app-mobile-nav"></div>
+  </div>
+
+  <script src="assets/data.js"></script>
+  <script src="assets/store.js"></script>
+  <script src="assets/auth.js"></script>
+  <script src="assets/ui.js"></script>
+  <script src="assets/layout.js"></script>
+
+  <script>
+    (() => {
+      "use strict";
+
+      const $ = (selector, root = document) => root.querySelector(selector);
+      const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
+
+      let selectedRange = "7d";
+      let refreshTimer = null;
+
+      const RANGE_DAYS = {
+        today: 1,
+        "7d": 7,
+        "30d": 30,
+        year: 365
+      };
+
+      const CHART_COLORS = ["#B5654A", "#C9A66B", "#2A1F1A", "#D6B99B", "#82746A", "#9B8575"];
+
+      function dateStart(days) {
+        const start = new Date();
+        start.setHours(0, 0, 0, 0);
+        start.setDate(start.getDate() - Math.max(0, days - 1));
+        return start;
+      }
+
+      function withinRange(value, days) {
+        if (!value) return false;
+        const timestamp = new Date(value).getTime();
+        return Number.isFinite(timestamp) && timestamp >= dateStart(days).getTime() && timestamp <= Date.now();
+      }
+
+      function getOrders(days) {
+        return Store.list("orders", (order) => withinRange(order.createdAt, days));
+      }
+
+      function paidOrders(orders) {
+        return orders.filter((order) => !["Cancelled", "Refunded"].includes(order.status));
+      }
+
+      function revenueOf(orders) {
+        return paidOrders(orders).reduce((sum, order) => sum + Number(order.total || 0), 0);
+      }
+
+      function getGreeting() {
+        const hour = new Date().getHours();
+        if (hour < 12) return "Good morning";
+        if (hour < 17) return "Good afternoon";
+        return "Good evening";
+      }
+
+      function renderGreeting() {
+        const staff = Auth.currentStaff();
+        const firstName = (staff?.name || "there").split(" ")[0];
+        $("#dashboard-greeting").textContent = `${getGreeting()}, ${firstName}.`;
+
+        $("#dashboard-date").textContent = new Intl.DateTimeFormat("en-NG", {
+          weekday: "long",
+          day: "numeric",
+          month: "long",
+          year: "numeric"
+        }).format(new Date());
+      }
+
+      function renderTrend(elementId, current, previous) {
+        const element = document.getElementById(elementId);
+        if (!element) return;
+
+        let percent = 0;
+        if (previous > 0) percent = ((current - previous) / previous) * 100;
+        else if (current > 0) percent = 100;
+
+        const up = percent >= 0;
+        element.className = `text-[10px] font-bold ${up ? "text-success" : "text-danger"}`;
+        element.textContent = `${up ? "↗" : "↘"} ${Math.abs(percent).toFixed(1)}%`;
+        element.setAttribute("aria-label", `${Math.abs(percent).toFixed(1)} percent ${up ? "increase" : "decrease"} compared with previous period`);
+      }
+
+      function renderSparkline(svg, values) {
+        const width = 88;
+        const height = 32;
+        const padding = 3;
+        const max = Math.max(...values, 1);
+        const min = Math.min(...values, 0);
+        const spread = max - min || 1;
+
+        const points = values.map((value, index) => {
+          const x = padding + index * (width - padding * 2) / Math.max(values.length - 1, 1);
+          const y = height - padding - ((value - min) / spread) * (height - padding * 2);
+          return [x, y];
+        });
+
+        svg.innerHTML = `
+          <polyline points="${points.map((point) => point.join(",")).join(" ")}"
+            fill="none" stroke="#B5654A" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round"></polyline>`;
+      }
+
+      function dailyValues(orders, days) {
+        const buckets = Array.from({ length: Math.min(days, 12) }, () => 0);
+        const today = new Date();
+        today.setHours(23, 59, 59, 999);
+
+        orders.forEach((order) => {
+          if (["Cancelled", "Refunded"].includes(order.status)) return;
+          const orderDate = new Date(order.createdAt);
+          const age = Math.floor((today.getTime() - orderDate.getTime()) / 86400000);
+          const bucket = Math.floor(age * buckets.length / days);
+          if (bucket >= 0 && bucket < buckets.length) {
+            buckets[buckets.length - 1 - bucket] += Number(order.total || 0);
+          }
+        });
+
+        return buckets;
+      }
+
+      function renderKPIs() {
+        const days = RANGE_DAYS[selectedRange];
+        const currentOrders = getOrders(days);
+        const previousOrders = Store.list("orders", (order) => {
+          if (!order.createdAt) return false;
+          const time = new Date(order.createdAt).getTime();
+          const end = dateStart(days).getTime();
+          const start = end - days * 86400000;
+          return time >= start && time < end;
+        });
+
+        const revenue = revenueOf(currentOrders);
+        const previousRevenue = revenueOf(previousOrders);
+        const currentPaid = paidOrders(currentOrders);
+        const previousPaid = paidOrders(previousOrders);
+        const aov = currentPaid.length ? revenue / currentPaid.length : 0;
+        const previousAov = previousPaid.length ? previousRevenue / previousPaid.length : 0;
+        const newCustomers = Store.list("customers", (customer) => withinRange(customer.createdAt, days)).length;
+        const previousCustomers = Store.list("customers", (customer) => {
+          if (!customer.createdAt) return false;
+          const time = new Date(customer.createdAt).getTime();
+          const end = dateStart(days).getTime();
+          return time >= end - days * 86400000 && time < end;
+        }).length;
+
+        $("#kpi-revenue").textContent = UI.money(revenue);
+        $("#kpi-orders").textContent = UI.number(currentOrders.length);
+        $("#kpi-aov").textContent = UI.money(aov);
+        $("#kpi-customers").textContent = UI.number(newCustomers);
+        $("#chart-total").textContent = UI.money(revenue);
+
+        renderTrend("kpi-revenue-trend", revenue, previousRevenue);
+        renderTrend("kpi-orders-trend", currentOrders.length, previousOrders.length);
+        renderTrend("kpi-aov-trend", aov, previousAov);
+        renderTrend("kpi-customers-trend", newCustomers, previousCustomers);
+
+        const recent = getOrders(30);
+        const sparkRevenue = dailyValues(recent, 30);
+        const sparkOrders = Array.from({ length: 8 }, (_, i) => {
+          const bucketStart = dateStart(30);
+          bucketStart.setDate(bucketStart.getDate() + i * 4);
+          const bucketEnd = new Date(bucketStart);
+          bucketEnd.setDate(bucketEnd.getDate() + 4);
+          return recent.filter((order) => {
+            const d = new Date(order.createdAt);
+            return d >= bucketStart && d < bucketEnd;
+          }).length;
+        });
+
+        renderSparkline($('[data-spark="revenue"]'), sparkRevenue);
+        renderSparkline($('[data-spark="orders"]'), sparkOrders);
+        renderSparkline($('[data-spark="aov"]'), sparkRevenue.map((v, i) => v / Math.max(sparkOrders[i] || 1, 1)));
+        renderSparkline($('[data-spark="customers"]'), Array.from({ length: 8 }, (_, i) => {
+          const customers = Store.list("customers");
+          return customers.filter((customer) => {
+            const d = new Date(customer.createdAt);
+            const start = dateStart(30);
+            start.setDate(start.getDate() + i * 4);
+            const end = new Date(start);
+            end.setDate(end.getDate() + 4);
+            return d >= start && d < end;
+          }).length;
+        }));
+      }
+
+      function chartLabels(days) {
+        if (days === 1) return ["Morning", "Midday", "Afternoon", "Evening"];
+        if (days <= 7) {
+          return Array.from({ length: 7 }, (_, i) => {
+            const date = new Date();
+            date.setDate(date.getDate() - (6 - i));
+            return date.toLocaleDateString("en-NG", { weekday: "short" });
+          });
+        }
+        if (days <= 30) {
+          return Array.from({ length: 6 }, (_, i) => {
+            const date = new Date();
+            date.setDate(date.getDate() - (25 - i * 5));
+            return date.toLocaleDateString("en-NG", { day: "numeric", month: "short" });
+          });
+        }
+
+        return ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+      }
+
+      function chartSeries(days, orders) {
+        const labels = chartLabels(days);
+
+        if (days === 1) {
+          const series = [0, 0, 0, 0];
+          orders.forEach((order) => {
+            if (["Cancelled", "Refunded"].includes(order.status)) return;
+            const hour = new Date(order.createdAt).getHours();
+            const index = hour < 12 ? 0 : hour < 15 ? 1 : hour < 18 ? 2 : 3;
+            series[index] += Number(order.total || 0);
+          });
+          return { labels, values: series };
+        }
+
+        const values = Array.from({ length: labels.length }, () => 0);
+        const now = new Date();
+
+        orders.forEach((order) => {
+          if (["Cancelled", "Refunded"].includes(order.status)) return;
+          const orderDate = new Date(order.createdAt);
+          let index;
+
+          if (days <= 7) {
+            const age = Math.floor((new Date(now.getFullYear(), now.getMonth(), now.getDate()) - new Date(orderDate.getFullYear(), orderDate.getMonth(), orderDate.getDate())) / 86400000);
+            index = labels.length - 1 - age;
+          } else if (days <= 30) {
+            const age = Math.floor((now.getTime() - orderDate.getTime()) / 86400000);
+            index = labels.length - 1 - Math.floor(age / 5);
+          } else {
+            index = orderDate.getMonth();
+          }
+
+          if (index >= 0 && index < values.length) values[index] += Number(order.total || 0);
+        });
+
+        return { labels, values };
+      }
+
+      function renderRevenueChart() {
+        const days = RANGE_DAYS[selectedRange];
+        const orders = getOrders(days);
+        const { labels, values } = chartSeries(days, orders);
+        const svg = $("#revenue-chart");
+        const width = 650;
+        const height = 235;
+        const left = 54;
+        const right = 16;
+        const top = 12;
+        const bottom = 30;
+        const plotW = width - left - right;
+        const plotH = height - top - bottom;
+        const max = Math.max(...values, 1) * 1.12;
+        const points = values.map((value, index) => [
+          left + (values.length === 1 ? plotW / 2 : index * plotW / (values.length - 1)),
+          top + plotH - (value / max) * plotH
+        ]);
+
+        const yLines = [0, .25, .5, .75, 1].map((fraction) => {
+          const y = top + plotH - fraction * plotH;
+          const value = max * fraction;
+          const label = value >= 1000000
+            ? `₦${(value / 1000000).toFixed(1)}m`
+            : value >= 1000
+              ? `₦${Math.round(value / 1000)}k`
+              : `₦${Math.round(value)}`;
+
+          return `
+            <line class="chart-gridline" x1="${left}" y1="${y}" x2="${width - right}" y2="${y}"></line>
+            <text class="chart-label" x="${left - 8}" y="${y + 3}" text-anchor="end">${label}</text>`;
+        }).join("");
+
+        const path = points.map((point, index) => `${index === 0 ? "M" : "L"} ${point[0]} ${point[1]}`).join(" ");
+        const areaPath = `${path} L ${points[points.length - 1][0]} ${top + plotH} L ${points[0][0]} ${top + plotH} Z`;
+
+        const xLabels = labels.map((label, index) => {
+          if (labels.length > 7 && index % 2 !== 0 && index !== labels.length - 1) return "";
+          return `<text class="chart-label" x="${points[index][0]}" y="${height - 8}" text-anchor="middle">${UI.escapeHTML(label)}</text>`;
+        }).join("");
+
+        svg.innerHTML = `
+          <defs>
+            <linearGradient id="revenue-area-gradient" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#B5654A" stop-opacity=".2"></stop>
+              <stop offset="100%" stop-color="#B5654A" stop-opacity="0"></stop>
+            </linearGradient>
+          </defs>
+          ${yLines}
+          <path d="${areaPath}" fill="url(#revenue-area-gradient)"></path>
+          <path class="chart-line" d="${path}"></path>
+          ${points.map((point) => `<circle class="chart-dot" cx="${point[0]}" cy="${point[1]}" r="3.5"></circle>`).join("")}
+          ${xLabels}`;
+
+        $("#chart-footnote").textContent = `${orders.length} orders in the selected period. Values are calculated from the seeded and locally saved demo orders.`;
+
+        $$("[data-chart-range]").forEach((button) => {
+          const active = button.dataset.chartRange === selectedRange;
+          button.classList.toggle("active", active);
+          button.setAttribute("aria-pressed", String(active));
+        });
+      }
+
+      function getCategoryTotals(days) {
+        const orders = paidOrders(getOrders(days));
+        const totals = {};
+
+        orders.forEach((order) => {
+          (order.items || []).forEach((item) => {
+            const product = Store.list("products").find((p) => p.id === item.productId);
+            const category = product?.category || "Other";
+            totals[category] = (totals[category] || 0) + Number(item.quantity || 0);
+          });
+        });
+
+        return Object.entries(totals).sort((a, b) => b[1] - a[1]);
+      }
+
+      function renderCategoryChart() {
+        const days = RANGE_DAYS[selectedRange];
+        const totals = getCategoryTotals(days);
+        const totalUnits = totals.reduce((sum, item) => sum + item[1], 0);
+        const svg = $("#category-donut");
+        const radius = 65;
+        const circumference = 2 * Math.PI * radius;
+        let offset = 0;
+
+        svg.innerHTML = `
+          <circle cx="90" cy="90" r="${radius}" fill="none" stroke="#F0EAE2" stroke-width="18"></circle>
+          ${totals.map((item, index) => {
+            const length = totalUnits ? circumference * item[1] / totalUnits : 0;
+            const circle = `
+              <circle cx="90" cy="90" r="${radius}" fill="none"
+                stroke="${CHART_COLORS[index % CHART_COLORS.length]}"
+                stroke-width="18"
+                stroke-dasharray="${length} ${circumference - length}"
+                stroke-dashoffset="${-offset}"
+                transform="rotate(-90 90 90)"></circle>`;
+            offset += length;
+            return circle;
+          }).join("")}`;
+
+        $("#category-count").textContent = UI.number(totalUnits);
+
+        const top = totals.slice(0, 4);
+        $("#category-legend").innerHTML = top.length
+          ? top.map((item, index) => {
+            const percentage = totalUnits ? Math.round(item[1] / totalUnits * 100) : 0;
+            const trackClass = ["", "gold", "espresso", "tan"][index] || "";
+            return `
+              <div>
+                <div class="mb-2 flex items-center justify-between gap-3">
+                  <div class="flex min-w-0 items-center gap-2">
+                    <span class="h-2.5 w-2.5 flex-shrink-0 rounded-full" style="background:${CHART_COLORS[index]}"></span>
+                    <span class="truncate text-xs font-semibold">${UI.escapeHTML(item[0])}</span>
+                  </div>
+                  <span class="text-xs font-bold tabular-nums">${percentage}%</span>
+                </div>
+                <div class="category-track ${trackClass}"><span style="width:${percentage}%"></span></div>
+              </div>`;
+          }).join("")
+          : `<div class="empty-state py-5"><p class="text-sm text-espresso-soft">No category sales in this period yet.</p></div>`;
+      }
+
+      function getTopProducts(days) {
+        const totals = new Map();
+        const products = Store.list("products");
+        const orders = paidOrders(getOrders(days));
+
+        orders.forEach((order) => {
+          (order.items || []).forEach((item) => {
+            const current = totals.get(item.productId) || { quantity: 0, revenue: 0 };
+            current.quantity += Number(item.quantity || 0);
+            current.revenue += Number(item.quantity || 0) * Number(item.price || 0);
+            totals.set(item.productId, current);
+          });
+        });
+
+        return [...totals.entries()]
+          .map(([productId, total]) => ({
+            product: products.find((product) => product.id === productId),
+            ...total
+          }))
+          .filter((item) => item.product)
+          .sort((a, b) => b.quantity - a.quantity)
+          .slice(0, 5);
+      }
+
+      function renderTopProducts() {
+        const top = getTopProducts(RANGE_DAYS[selectedRange]);
+        const root = $("#top-products");
+
+        if (!top.length) {
+          root.innerHTML = `
+            <div class="empty-state">
+              <div class="empty-state-mark">${UI.icon("package", 22)}</div>
+              <h4 class="mt-3 font-display text-xl font-semibold">No sales yet</h4>
+              <p class="mt-1 text-xs text-espresso-soft">Products will appear here when orders are recorded.</p>
+            </div>`;
+          return;
+        }
+
+        root.innerHTML = top.map((item, index) => `
+          <a href="product-form.html?id=${encodeURIComponent(item.product.id)}" class="flex items-center gap-3 py-4">
+            <span class="w-5 text-center font-display text-lg font-semibold text-espresso-soft">${String(index + 1).padStart(2, "0")}</span>
+            <img
+              src="${UI.escapeHTML(item.product.images?.[0] || "")}"
+              alt=""
+              class="product-thumb"
+              loading="lazy"
+              onerror="this.onerror=null;this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 80 90%22%3E%3Crect width=%2280%22 height=%2290%22 fill=%22%23EFE7DB%22/%3E%3Cpath d=%22M25 30h30l5 42H20z%22 fill=%22%23D6B99B%22/%3E%3C/svg%3E'"
+            />
+            <span class="min-w-0 flex-1">
+              <span class="block truncate text-xs font-bold">${UI.escapeHTML(item.product.name)}</span>
+              <span class="mt-1 block text-[10px] text-espresso-soft">${UI.escapeHTML(item.product.category)} · ${item.quantity} sold</span>
+            </span>
+            <span class="text-right">
+              <span class="block text-xs font-bold tabular-nums">${UI.money(item.revenue)}</span>
+              <span class="mt-1 block text-[10px] text-espresso-soft">Revenue</span>
+            </span>
+          </a>`).join("");
+      }
+
+      function renderLowStock() {
+        const products = Store.list("products")
+          .filter((product) => product.status !== "Archived")
+          .map((product) => {
+            const reorder = Math.min(...(product.variants || []).map((variant) => Number(variant.reorderPoint || 8)));
+            return { ...product, reorderPoint: Number.isFinite(reorder) ? reorder : 8 };
+          })
+          .filter((product) => Number(product.stock || 0) <= product.reorderPoint)
+          .sort((a, b) => Number(a.stock || 0) - Number(b.stock || 0))
+          .slice(0, 5);
+
+        $("#low-stock-count").textContent = `${products.length} items`;
+
+        const root = $("#low-stock-list");
+        if (!products.length) {
+          root.innerHTML = `
+            <div class="empty-state">
+              <div class="empty-state-mark">${UI.icon("check", 22)}</div>
+              <h4 class="mt-3 font-display text-xl font-semibold">Stock looks good</h4>
+              <p class="mt-1 text-xs text-espresso-soft">No products are below their reorder point.</p>
+            </div>`;
+          return;
+        }
+
+        root.innerHTML = products.map((product) => `
+          <div class="flex items-center gap-3 py-4">
+            <img
+              src="${UI.escapeHTML(product.images?.[0] || "")}"
+              alt=""
+              class="product-thumb"
+              loading="lazy"
+              onerror="this.onerror=null;this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 80 90%22%3E%3Crect width=%2280%22 height=%2290%22 fill=%22%23EFE7DB%22/%3E%3Cpath d=%22M25 30h30l5 42H20z%22 fill=%22%23D6B99B%22/%3E%3C/svg%3E'"
+            />
+            <div class="min-w-0 flex-1">
+              <div class="truncate text-xs font-bold">${UI.escapeHTML(product.name)}</div>
+              <div class="mt-1 text-[10px] text-espresso-soft">${UI.escapeHTML(product.sku)}</div>
+            </div>
+            <div class="text-right">
+              <div class="text-xs font-bold tabular-nums ${product.stock === 0 ? "text-danger" : "text-[#785719]"}">${UI.number(product.stock)} left</div>
+              <div class="mt-1 text-[10px] text-espresso-soft">Reorder at ${UI.number(product.reorderPoint)}</div>
+            </div>
+          </div>`).join("");
+
+        if (Auth.can("inventory")) {
+          root.insertAdjacentHTML("beforeend", `
+            <a href="inventory.html" class="flex min-h-[44px] items-center justify-center gap-2 border-t border-line text-xs font-bold text-clay hover:text-clay-hover">
+              Review stock levels ${UI.icon("arrowUpRight", 15)}
+            </a>`);
+        }
+      }
+
+      function renderRecentOrders() {
+        const orders = Store.list("orders").sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).slice(0, 6);
+        const root = $("#recent-orders");
+
+        if (!orders.length) {
+          root.innerHTML = `<tr><td colspan="6"><div class="empty-state"><div class="font-display text-xl">No orders yet</div><p class="mt-2 text-xs text-espresso-soft">Orders will appear here when created.</p><a href="orders.html?create=1" class="btn btn-primary mt-4">Create an order</a></div></td></tr>`;
+          return;
+        }
+
+        root.innerHTML = orders.map((order) => `
+          <tr class="cursor-pointer" data-order-id="${UI.escapeHTML(order.id)}" tabindex="0" role="link" aria-label="Open order ${UI.escapeHTML(order.id)}">
+            <td data-label="Order">
+              <span class="font-bold text-espresso">${UI.escapeHTML(order.id)}</span>
+            </td>
+            <td data-label="Customer">
+              <span class="flex min-w-0 items-center gap-2">
+                <span class="avatar !h-8 !w-8 !text-[10px]">${UI.escapeHTML(UI.initials(order.customerName))}</span>
+                <span class="min-w-0">
+                  <span class="block truncate font-semibold">${UI.escapeHTML(order.customerName)}</span>
+                  <span class="mt-1 block text-[10px] text-espresso-soft">${UI.escapeHTML(order.customerEmail || "")}</span>
+                </span>
+              </span>
+            </td>
+            <td data-label="Date"><span class="text-xs text-espresso-soft">${UI.escapeHTML(UI.date(order.createdAt, { day: "numeric", month: "short" }))}</span></td>
+            <td data-label="Payment"><span class="text-xs">${UI.escapeHTML(order.paymentMethod || "—")}</span></td>
+            <td data-label="Status">${UI.statusBadge(order.status)}</td>
+            <td data-label="Total" class="text-right"><span class="font-bold tabular-nums">${UI.money(order.total)}</span></td>
+          </tr>`).join("");
+
+        root.querySelectorAll("[data-order-id]").forEach((row) => {
+          const open = () => {
+            window.location.href = `orders.html?id=${encodeURIComponent(row.dataset.orderId)}`;
+          };
+          row.addEventListener("click", open);
+          row.addEventListener("keydown", (event) => {
+            if (event.key === "Enter" || event.key === " ") {
+              event.preventDefault();
+              open();
+            }
+          });
+        });
+      }
+
+      function renderQuickActions() {
+        const actions = [];
+
+        if (Auth.can("products")) {
+          actions.push({
+            title: "Add a product",
+            description: "Bring a new piece into the collection.",
+            icon: "package",
+            href: "product-form.html",
+            tone: "clay"
+          });
+        }
+
+        if (Auth.can("orders")) {
+          actions.push({
+            title: "Create an order",
+            description: "Record a new customer purchase.",
+            icon: "shopping",
+            href: "orders.html?create=1",
+            tone: "gold"
+          });
+        }
+
+        if (Auth.can("inventory")) {
+          actions.push({
+            title: "Review inventory",
+            description: "Check quantities and reorder points.",
+            icon: "inventory",
+            href: "inventory.html",
+            tone: "espresso"
+          });
+        }
+
+        if (Auth.can("sales")) {
+          actions.push({
+            title: "View sales",
+            description: "Explore revenue and transactions.",
+            icon: "chart",
+            href: "sales.html",
+            tone: "success"
+          });
+        }
+
+        const root = $("#quick-actions");
+        root.innerHTML = actions.map((action) => `
+          <a href="${action.href}" class="card flex min-h-[118px] items-start gap-3 p-4 transition hover:-translate-y-0.5 hover:shadow-soft sm:p-5">
+            <span class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl ${action.tone === "clay" ? "bg-[#F4E4DE] text-clay" : action.tone === "gold" ? "bg-warning-bg text-[#785719]" : action.tone === "success" ? "bg-success-bg text-success" : "bg-cream text-espresso"}">${UI.icon(action.icon, 20)}</span>
+            <span class="min-w-0 flex-1">
+              <span class="block text-xs font-bold">${UI.escapeHTML(action.title)}</span>
+              <span class="mt-2 block text-[10px] leading-5 text-espresso-soft">${UI.escapeHTML(action.description)}</span>
+            </span>
+            <span class="mt-1 text-espresso-soft">${UI.icon("arrowUpRight", 16)}</span>
+          </a>`).join("");
+      }
+
+      function renderAll() {
+        renderGreeting();
+        renderKPIs();
+        renderRevenueChart();
+        renderCategoryChart();
+        renderTopProducts();
+        renderLowStock();
+        renderRecentOrders();
+        renderQuickActions();
+      }
+
+      function changeRange(value) {
+        selectedRange = RANGE_DAYS[value] ? value : "7d";
+        $("#date-range").value = selectedRange;
+        renderKPIs();
+        renderRevenueChart();
+        renderCategoryChart();
+        renderTopProducts();
+      }
+
+      $("#date-range").addEventListener("change", (event) => {
+        changeRange(event.target.value);
+      });
+
+      $$("[data-chart-range]").forEach((button) => {
+        button.addEventListener("click", () => changeRange(button.dataset.chartRange));
+      });
+
+      $("#refresh-dashboard").addEventListener("click", async () => {
+        const button = $("#refresh-dashboard");
+        button.disabled = true;
+        button.classList.add("animate-pulse");
+
+        await new Promise((resolve) => window.setTimeout(resolve, 350));
+        renderAll();
+
+        button.disabled = false;
+        button.classList.remove("animate-pulse");
+        UI.toast("Dashboard refreshed.", "success");
+      });
+
+      Store.subscribe(({ key }) => {
+        if (["*", "orders", "products", "customers", "settings", "staff"].includes(key)) {
+          window.clearTimeout(refreshTimer);
+          refreshTimer = window.setTimeout(renderAll, 80);
+        }
+      });
+
+      document.addEventListener("DOMContentLoaded", () => {
+        const content = $("#app-content");
+        if (content) content.classList.add("animate-fade-in");
+        renderAll();
+      });
+
+      // The shared shell mounts on DOMContentLoaded too. Render immediately
+      // if this script is evaluated after that event.
+      if (document.readyState !== "loading") {
+        renderAll();
+      }
+    })();
+  </script>
+</body>
+</html>

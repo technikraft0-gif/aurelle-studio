@@ -1,0 +1,30 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Look up a locally stored Aurelle Studio demo order.">
+  <title>Track Your Order | Aurelle Studio</title>
+  <link rel="stylesheet" href="assets/storefront.css"><script src="assets/pages/storefront.js" defer></script>
+</head>
+<body>
+  <div class="announcement">Here to help, every step of the way</div>
+  <header class="site-header"><div class="container header-inner">
+    <button class="mobile-menu" data-mobile-toggle aria-label="Toggle navigation" aria-expanded="false">☰</button>
+    <a class="brand" href="index.html">AURELLE<small>STUDIO</small></a>
+    <nav class="main-nav"><a href="shop.html">Shop</a><a href="about.html">Our story</a><a href="contact.html">Contact</a></nav>
+    <div class="header-actions"><a href="cart.html">Bag <span class="cart-count" data-cart-count>0</span></a></div>
+  </div><nav class="mobile-nav" data-mobile-nav><a href="shop.html">Shop</a><a href="contact.html">Contact</a></nav></header>
+  <main>
+    <section class="page-hero"><div class="container"><span class="eyebrow">Order care</span><h1>Where is your order?</h1><p>Enter the order reference from your demo checkout to view its locally saved details.</p>
+      <form class="tracking-form" data-tracking-form><input name="order" required placeholder="e.g. AUR-12345678" aria-label="Order reference"><button class="button" type="submit">Look up order</button></form>
+    </div></section>
+    <section class="page-content"><div class="container content-narrow">
+      <div data-tracking-result><div class="empty-state"><h2>Order updates</h2><p>Orders created in this browser can be looked up here. Live courier tracking is not connected.</p></div></div>
+      <div class="notice">Can't find your order? <a class="text-link" href="contact.html">Contact our team</a> with your order reference and email address.</div>
+    </div></section>
+  </main>
+  <footer class="site-footer"><div class="container"><div class="footer-bottom"><span>© <span data-year></span> Aurelle Studio</span><span><a href="shipping-returns.html">Shipping & returns</a> · <a href="faq.html">FAQs</a></span></div></div></footer>
+  <script>document.querySelector("[data-year]").textContent = new Date().getFullYear();</script>
+</body>
+</html>

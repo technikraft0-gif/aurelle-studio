@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#F7F2EA">
+  <title>Products · Aurelle Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="assets/tailwind-config.js"></script>
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body class="min-h-screen bg-ivory text-espresso antialiased" data-page="products">
+  <div id="app-shell">
+    <main id="page-content" class="min-w-0">
+      <section class="mx-auto w-full max-w-[1600px] p-4 pb-28 sm:p-6 lg:p-8 lg:pb-8">
+        <header class="mb-6 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <div class="mb-2 flex items-center gap-2 text-xs font-semibold uppercase tracking-[.18em] text-espresso/50">
+              <span>Catalogue</span><span aria-hidden="true">/</span><span>Products</span>
+            </div>
+            <h1 class="font-display text-4xl font-semibold tracking-tight sm:text-5xl">Products</h1>
+            <p class="mt-2 max-w-xl text-sm leading-6 text-espresso/65">
+              Curate your collection, manage availability, and keep every detail polished.
+            </p>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <button id="export-products" class="btn-secondary" type="button">Export CSV</button>
+            <a href="product-form.html" class="btn-primary">
+              <span aria-hidden="true">＋</span> Add product
+            </a>
+          </div>
+        </header>
+
+        <div id="product-stats" class="mb-6 grid grid-cols-2 gap-3 xl:grid-cols-4"></div>
+
+        <section class="overflow-hidden rounded-2xl border border-espresso/10 bg-white">
+          <div class="border-b border-espresso/10 p-4 sm:p-5">
+            <div class="flex flex-wrap items-center justify-between gap-3">
+              <div id="product-tabs" class="flex max-w-full gap-1 overflow-x-auto pb-1" role="tablist" aria-label="Product status">
+                <button class="filter-tab is-active" data-status="all" type="button">All</button>
+                <button class="filter-tab" data-status="Published" type="button">Published</button>
+                <button class="filter-tab" data-status="Draft" type="button">Draft</button>
+                <button class="filter-tab" data-status="Archived" type="button">Archived</button>
+              </div>
+              <div class="flex items-center gap-2">
+                <button id="view-grid" class="icon-button" type="button" aria-label="Grid view" title="Grid view">▦</button>
+                <button id="view-list" class="icon-button" type="button" aria-label="List view" title="List view">☷</button>
+              </div>
+            </div>
+
+            <div class="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-[minmax(220px,1fr)_180px_160px_auto]">
+              <label class="field-wrap">
+                <span class="sr-only">Search products</span>
+                <span class="field-icon" aria-hidden="true">⌕</span>
+                <input id="product-search" class="field-input pl-10" type="search" placeholder="Search name, SKU, or tag…" autocomplete="off">
+              </label>
+              <label>
+                <span class="sr-only">Category filter</span>
+                <select id="category-filter" class="field-input">
+                  <option value="">All categories</option>
+                </select>
+              </label>
+              <label>
+                <span class="sr-only">Stock filter</span>
+                <select id="stock-filter" class="field-input">
+                  <option value="">All stock levels</option>
+                  <option value="in">In stock</option>
+                  <option value="low">Low stock</option>
+                  <option value="out">Out of stock</option>
+                </select>
+              </label>
+              <label>
+                <span class="sr-only">Sort products</span>
+                <select id="product-sort" class="field-input">
+                  <option value="updated">Recently updated</option>
+                  <option value="name">Name A–Z</option>
+                  <option value="price-high">Price: high to low</option>
+                  <option value="price-low">Price: low to high</option>
+                  <option value="stock">Lowest stock</option>
+                </select>
+              </label>
+            </div>
+
+            <div id="bulk-bar" class="mt-4 hidden flex-wrap items-center justify-between gap-3 rounded-xl bg-cream p-3">
+              <span id="bulk-count" class="text-sm font-semibold">0 selected</span>
+              <div class="flex flex-wrap gap-2">
+                <button id="bulk-publish" class="btn-secondary btn-sm" type="button">Publish</button>
+                <button id="bulk-draft" class="btn-secondary btn-sm" type="button">Move to draft</button>
+                <button id="bulk-delete" class="btn-danger btn-sm" type="button">Delete</button>
+                <button id="bulk-clear" class="btn-ghost btn-sm" type="button">Clear</button>
+              </div>
+            </div>
+          </div>
+
+          <div id="product-results" aria-live="polite">
+            <div class="grid grid-cols-1 gap-4 p-4 sm:grid-cols-2 xl:grid-cols-3">
+              <div class="skeleton h-56 rounded-xl"></div>
+              <div class="skeleton h-56 rounded-xl"></div>
+              <div class="skeleton h-56 rounded-xl"></div>
+            </div>
+          </div>
+
+          <footer class="flex flex-col gap-3 border-t border-espresso/10 p-4 sm:flex-row sm:items-center sm:justify-between">
+            <p id="product-count" class="text-sm text-espresso/60">Loading products…</p>
+            <div class="flex items-center gap-2">
+              <label for="page-size" class="text-sm text-espresso/60">Rows</label>
+              <select id="page-size" class="field-input !w-20 !py-2">
+                <option>10</option><option>25</option><option>50</option>
+              </select>
+              <button id="prev-page" class="btn-secondary btn-sm" type="button">Previous</button>
+              <span id="page-number" class="min-w-12 text-center text-sm tabular-nums">1 / 1</span>
+              <button id="next-page" class="btn-secondary btn-sm" type="button">Next</button>
+            </div>
+          </footer>
+        </section>
+      </section>
+    </main>
+  </div>
+
+  <script src="assets/data.js"></script>
+  <script src="assets/store.js"></script>
+  <script src="assets/auth.js"></script>
+  <script src="assets/ui.js"></script>
+  <script src="assets/layout.js"></script>
+  <script src="assets/pages/products.js"></script>
+</body>
+</html>

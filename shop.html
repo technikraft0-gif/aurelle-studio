@@ -1,0 +1,68 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Explore considered wardrobe essentials, clothing and accessories at Aurelle Studio.">
+  <title>Shop the Collection | Aurelle Studio</title>
+  <link rel="stylesheet" href="assets/storefront.css">
+  <script src="assets/pages/storefront.js" defer></script>
+</head>
+<body>
+  <div class="announcement">Complimentary delivery on orders over ₦50,000</div>
+  <header class="site-header">
+    <div class="container header-inner">
+      <button class="mobile-menu" data-mobile-toggle aria-label="Toggle navigation" aria-expanded="false">☰</button>
+      <a class="brand" href="index.html">AURELLE<small>STUDIO</small></a>
+      <nav class="main-nav" aria-label="Main navigation">
+        <a href="shop.html">Shop</a><a href="shop.html?category=Dresses">Clothing</a><a href="about.html">Our story</a><a href="contact.html">Contact</a>
+      </nav>
+      <div class="header-actions"><a href="wishlist.html">Wishlist <span data-wishlist-count>0</span></a><a href="cart.html">Bag <span class="cart-count" data-cart-count>0</span></a></div>
+    </div>
+    <nav class="mobile-nav" data-mobile-nav aria-label="Mobile navigation">
+      <a href="shop.html">Shop all</a><a href="shop.html?category=Dresses">Dresses</a><a href="shop.html?category=Tops">Tops</a><a href="shop.html?category=Accessories">Accessories</a><a href="about.html">Our story</a><a href="contact.html">Contact</a>
+    </nav>
+  </header>
+  <main>
+    <section class="page-hero"><div class="container"><span class="eyebrow">The Aurelle edit</span><h1>Pieces to live in.</h1><p>Thoughtful essentials, versatile silhouettes and considered details for a wardrobe that feels entirely your own.</p></div></section>
+    <section class="page-content"><div class="container">
+      <div class="section-heading"><div><h2>Shop the collection</h2><p>Discover your next wardrobe favourite.</p></div>
+        <div class="field"><label for="category-filter">Filter by category</label><select id="category-filter" class="search-input"><option value="">All pieces</option><option>Dresses</option><option>Tops</option><option>Bottoms</option><option>Accessories</option><option>Shoes</option></select></div>
+      </div>
+      <div class="product-grid" data-product-grid></div>
+    </div></section>
+  </main>
+  <footer class="site-footer"><div class="container">
+    <div class="footer-grid">
+      <div><a class="footer-brand" href="index.html">AURELLE</a><p class="footer-copy">An intentional wardrobe, shaped by timeless design and the beauty of everyday dressing.</p></div>
+      <div class="footer-column"><h3>Explore</h3><a href="shop.html">Shop all</a><a href="about.html">Our story</a><a href="wishlist.html">Wishlist</a></div>
+      <div class="footer-column"><h3>Customer care</h3><a href="faq.html">FAQs</a><a href="shipping-returns.html">Shipping & returns</a><a href="track-order.html">Track an order</a><a href="contact.html">Contact</a></div>
+      <div class="footer-column"><h3>Letters from Aurelle</h3><p class="footer-copy">New arrivals, thoughtful edits and notes from the studio.</p><form class="newsletter-form" data-newsletter-form><input type="email" placeholder="Your email address" aria-label="Email address" required><button>Join</button></form></div>
+    </div>
+    <div class="footer-bottom"><span>© <span data-year></span> Aurelle Studio</span><span><a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a></span></div>
+  </div></footer>
+  <script>
+  document.querySelector("[data-year]").textContent = new Date().getFullYear();
+
+  const filter = document.querySelector("#category-filter");
+  const params = new URLSearchParams(location.search);
+  filter.value = params.get("category") || "";
+
+  const grid = document.querySelector("[data-product-grid]");
+  grid.dataset.category = filter.value;
+
+  filter.addEventListener("change", () => {
+    const url = new URL(location.href);
+
+    if (filter.value) {
+      url.searchParams.set("category", filter.value);
+    } else {
+      url.searchParams.delete("category");
+    }
+
+    location.href = url.pathname + url.search;
+  });
+</script>
+</body>
+</html>

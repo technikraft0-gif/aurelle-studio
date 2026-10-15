@@ -1,0 +1,42 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Answers to common Aurelle Studio questions about orders, delivery, sizing and returns.">
+  <title>Frequently Asked Questions | Aurelle Studio</title>
+  <link rel="stylesheet" href="assets/storefront.css"><script src="assets/pages/storefront.js" defer></script>
+</head>
+<body>
+  <div class="announcement">A little clarity, whenever you need it</div>
+  <header class="site-header"><div class="container header-inner">
+    <button class="mobile-menu" data-mobile-toggle aria-label="Toggle navigation" aria-expanded="false">☰</button>
+    <a class="brand" href="index.html">AURELLE<small>STUDIO</small></a>
+    <nav class="main-nav"><a href="shop.html">Shop</a><a href="about.html">Our story</a><a href="shipping-returns.html">Shipping & returns</a><a href="contact.html">Contact</a></nav>
+    <div class="header-actions"><a href="wishlist.html">Wishlist</a><a href="cart.html">Bag <span class="cart-count" data-cart-count>0</span></a></div>
+  </div><nav class="mobile-nav" data-mobile-nav><a href="shop.html">Shop</a><a href="shipping-returns.html">Shipping & returns</a><a href="contact.html">Contact</a></nav></header>
+  <main>
+    <section class="page-hero"><div class="container"><span class="eyebrow">Customer care</span><h1>Good to know.</h1><p>Helpful answers to the questions you may have before or after placing an order.</p></div></section>
+    <section class="page-content"><div class="container faq-list">
+      <div class="section-heading"><div><h2>Orders & payments</h2><p>Everything around placing an order.</p></div></div>
+      <details class="faq-item"><summary>How do I place an order?</summary><div class="faq-answer">Browse the shop, select a product and add it to your bag. Review your items, then follow the checkout steps. This current version is a front-end demo and does not send orders to a live store.</div></details>
+      <details class="faq-item"><summary>Which payment methods do you accept?</summary><div class="faq-answer">Payment options must be confirmed by the store owner. The demo checkout displays sample options only and does not process payments. Add your actual payment provider and supported methods before launching.</div></details>
+      <details class="faq-item"><summary>Can I change or cancel my order?</summary><div class="faq-answer">Contact customer care as soon as possible with your order reference. Changes may not be possible after an order has been packed or dispatched. Confirm the final policy with the store before publishing.</div></details>
+      <details class="faq-item"><summary>Where can I find my order reference?</summary><div class="faq-answer">In this demo, the reference appears on the order confirmation page after checkout. In a live store, it should also appear in your confirmation email or customer account.</div></details>
+
+      <div class="section-heading" style="margin-top:45px"><div><h2>Delivery & returns</h2><p>Planning for your order to arrive.</p></div></div>
+      <details class="faq-item"><summary>How long does delivery take?</summary><div class="faq-answer">Delivery timelines depend on your location, courier and fulfilment arrangements. Publish verified delivery estimates for each service area before accepting live orders.</div></details>
+      <details class="faq-item"><summary>How much does delivery cost?</summary><div class="faq-answer">The prototype currently shows a sample ₦2,500 delivery charge for orders below ₦50,000 and free delivery at or above ₦50,000. Change these values to your real delivery rules before launch.</div></details>
+      <details class="faq-item"><summary>Can I return or exchange an item?</summary><div class="faq-answer">Please read the <a class="text-link" href="shipping-returns.html">Shipping & Returns page</a>. Return windows, eligible items, condition requirements and refund timing should be confirmed by the business before publication.</div></details>
+
+      <div class="section-heading" style="margin-top:45px"><div><h2>Products & care</h2><p>Choosing pieces with confidence.</p></div></div>
+      <details class="faq-item"><summary>How do I choose the right size?</summary><div class="faq-answer">Check the product details and any size guide available. If you are unsure, contact customer care with the item name and your usual fit preference. Add a measured size chart for your actual products.</div></details>
+      <details class="faq-item"><summary>Will an item be restocked?</summary><div class="faq-answer">Availability can change. Contact the team about a specific piece or subscribe to store updates for announcements, if that service is enabled.</div></details>
+      <details class="faq-item"><summary>How can I reach the team?</summary><div class="faq-answer">Use the <a class="text-link" href="contact.html">Contact page</a> to send an enquiry. In this demo, the form does not send data to a server, so connect it to a real inbox or customer-support service before launch.</div></details>
+      <div class="notice">Still have a question? <a class="text-link" href="contact.html">Contact Aurelle Studio</a>.</div>
+    </div></section>
+  </main>
+  <footer class="site-footer"><div class="container"><div class="footer-bottom"><span>© <span data-year></span> Aurelle Studio</span><span><a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a></span></div></div></footer>
+  <script>document.querySelector("[data-year]").textContent = new Date().getFullYear();</script>
+</body>
+</html>

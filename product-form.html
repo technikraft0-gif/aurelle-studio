@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#F7F2EA">
+  <title>Product editor · Aurelle Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="assets/tailwind-config.js"></script>
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body class="min-h-screen bg-ivory text-espresso antialiased" data-page="product-form">
+  <div id="app-shell">
+    <main id="page-content">
+      <section class="mx-auto w-full max-w-[1400px] p-4 pb-32 sm:p-6 lg:p-8 lg:pb-8">
+        <div class="mb-6">
+          <a href="products.html" class="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-espresso/60 hover:text-clay">
+            <span aria-hidden="true">←</span> Back to products
+          </a>
+          <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <p class="text-xs font-semibold uppercase tracking-[.18em] text-espresso/50">Catalogue / Product editor</p>
+              <h1 id="form-title" class="mt-2 font-display text-4xl font-semibold sm:text-5xl">Add product</h1>
+              <p class="mt-2 text-sm text-espresso/60">Thoughtful details make every piece feel considered.</p>
+            </div>
+            <div id="form-status" class="text-sm text-espresso/50">Unsaved changes</div>
+          </div>
+        </div>
+
+        <form id="product-form" novalidate>
+          <div class="grid grid-cols-1 items-start gap-5 xl:grid-cols-[minmax(0,1fr)_340px]">
+            <div class="space-y-5">
+              <section class="panel p-4 sm:p-6">
+                <div class="mb-5">
+                  <h2 class="section-title">Product details</h2>
+                  <p class="section-subtitle">Start with the essentials shoppers need to know.</p>
+                </div>
+                <div class="space-y-5">
+                  <label class="block">
+                    <span class="field-label">Product name <span class="text-clay">*</span></span>
+                    <input id="product-name" name="name" class="field-input" required maxlength="120" placeholder="e.g. The Solene Linen Dress">
+                    <span class="field-error" data-error="name"></span>
+                  </label>
+                  <label class="block">
+                    <span class="field-label">URL slug</span>
+                    <input id="product-slug" name="slug" class="field-input" placeholder="the-solene-linen-dress">
+                    <span class="mt-1 block text-xs text-espresso/50">Used in the product URL. Keep it short and readable.</span>
+                  </label>
+                  <label class="block">
+                    <span class="field-label">Description</span>
+                    <textarea id="product-description" name="description" rows="5" class="field-input resize-y" placeholder="Describe the silhouette, feel, fit, and details…"></textarea>
+                  </label>
+                  <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                    <label class="block">
+                      <span class="field-label">Price <span class="text-clay">*</span></span>
+                      <div class="field-wrap"><span class="field-prefix">₦</span><input id="product-price" name="price" class="field-input pl-9" type="number" min="0" step="0.01" inputmode="decimal" required placeholder="0.00"></div>
+                      <span class="field-error" data-error="price"></span>
+                    </label>
+                    <label class="block">
+                      <span class="field-label">Compare-at price</span>
+                      <div class="field-wrap"><span class="field-prefix">₦</span><input id="product-compare" name="compareAtPrice" class="field-input pl-9" type="number" min="0" step="0.01" inputmode="decimal" placeholder="Optional"></div>
+                      <span class="mt-1 block text-xs text-espresso/50">Shown as the original price when discounted.</span>
+                    </label>
+                  </div>
+                  <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                    <label class="block">
+                      <span class="field-label">SKU</span>
+                      <input id="product-sku" name="sku" class="field-input" maxlength="40" placeholder="AUR-0001">
+                    </label>
+                    <label class="block">
+                      <span class="field-label">Category</span>
+                      <select id="product-category" name="category" class="field-input">
+                        <option value="">Choose a category</option>
+                      </select>
+                    </label>
+                  </div>
+                  <label class="block">
+                    <span class="field-label">Tags</span>
+                    <input id="product-tags" name="tags" class="field-input" placeholder="linen, occasion, new-season">
+                    <span class="mt-1 block text-xs text-espresso/50">Separate tags with commas.</span>
+                  </label>
+                </div>
+              </section>
+
+              <section class="panel p-4 sm:p-6">
+                <div class="mb-5">
+                  <h2 class="section-title">Product imagery</h2>
+                  <p class="section-subtitle">Upload up to 6 images. The first image is the cover.</p>
+                </div>
+                <label id="image-dropzone" class="flex min-h-44 cursor-pointer flex-col items-center justify-center rounded-2xl border border-dashed border-espresso/25 bg-ivory p-6 text-center transition hover:border-clay">
+                  <span class="mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-cream text-2xl" aria-hidden="true">↑</span>
+                  <span class="font-semibold">Drop images here, or browse</span>
+                  <span class="mt-1 text-sm text-espresso/55">JPG, PNG, or WebP · up to 3 MB each</span>
+                  <input id="product-images" type="file" accept="image/png,image/jpeg,image/webp" multiple class="sr-only">
+                </label>
+                <div id="image-preview-list" class="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3"></div>
+                <p id="image-error" class="field-error" role="status"></p>
+              </section>
+
+              <section class="panel p-4 sm:p-6">
+                <div class="mb-5">
+                  <h2 class="section-title">Variants and inventory</h2>
+                  <p class="section-subtitle">Set sizing, colour, and starting stock.</p>
+                </div>
+                <div class="space-y-5">
+                  <fieldset>
+                    <legend class="field-label">Sizes</legend>
+                    <div id="size-options" class="flex flex-wrap gap-2">
+                      <label class="choice-chip"><input type="checkbox" value="XS"><span>XS</span></label>
+                      <label class="choice-chip"><input type="checkbox" value="S"><span>S</span></label>
+                      <label class="choice-chip"><input type="checkbox" value="M"><span>M</span></label>
+                      <label class="choice-chip"><input type="checkbox" value="L"><span>L</span></label>
+                      <label class="choice-chip"><input type="checkbox" value="XL"><span>XL</span></label>
+                      <label class="choice-chip"><input type="checkbox" value="One Size"><span>One size</span></label>
+                    </div>
+                  </fieldset>
+                  <fieldset>
+                    <legend class="field-label">Colours</legend>
+                    <div id="color-options" class="flex flex-wrap gap-3">
+                      <label class="color-choice"><input type="checkbox" value="Ivory"><span style="--swatch:#F7F2EA"></span><small>Ivory</small></label>
+                      <label class="color-choice"><input type="checkbox" value="Black"><span style="--swatch:#2A1F1A"></span><small>Black</small></label>
+                      <label class="color-choice"><input type="checkbox" value="Clay"><span style="--swatch:#B5654A"></span><small>Clay</small></label>
+                      <label class="color-choice"><input type="checkbox" value="Olive"><span style="--swatch:#78806B"></span><small>Olive</small></label>
+                      <label class="color-choice"><input type="checkbox" value="Blush"><span style="--swatch:#D8B5A9"></span><small>Blush</small></label>
+                    </div>
+                  </fieldset>
+                  <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                    <label class="block">
+                      <span class="field-label">Total stock</span>
+                      <input id="product-stock" name="stock" class="field-input" type="number" min="0" step="1" inputmode="numeric" value="0">
+                    </label>
+                    <label class="block">
+                      <span class="field-label">Low-stock threshold</span>
+                      <input id="product-reorder" name="reorderPoint" class="field-input" type="number" min="0" step="1" inputmode="numeric" value="5">
+                    </label>
+                  </div>
+                  <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                    <label class="block">
+                      <span class="field-label">Material</span>
+                      <input id="product-material" name="material" class="field-input" placeholder="e.g. 100% linen">
+                    </label>
+                    <label class="block">
+                      <span class="field-label">Weight (grams)</span>
+                      <input id="product-weight" name="weight" class="field-input" type="number" min="0" step="1" inputmode="numeric" placeholder="Optional">
+                    </label>
+                  </div>
+                  <label class="block">
+                    <span class="field-label">Care instructions</span>
+                    <textarea id="product-care" name="care" rows="3" class="field-input resize-y" placeholder="Care instructions…"></textarea>
+                  </label>
+                </div>
+              </section>
+            </div>
+
+            <aside class="space-y-5">
+              <section class="panel p-4 sm:p-5">
+                <h2 class="section-title">Publishing</h2>
+                <p class="section-subtitle">Choose how this item appears in your store.</p>
+                <label class="mt-5 block">
+                  <span class="field-label">Status</span>
+                  <select id="product-status" name="status" class="field-input">
+                    <option>Draft</option><option>Published</option><option>Archived</option>
+                  </select>
+                </label>
+                <label class="mt-4 block">
+                  <span class="field-label">Schedule publish (optional)</span>
+                  <input id="product-schedule" name="scheduledAt" class="field-input" type="datetime-local">
+                </label>
+                <div class="mt-5 rounded-xl bg-cream p-3">
+                  <p class="text-xs font-semibold uppercase tracking-wider text-espresso/55">Storefront visibility</p>
+                  <p id="visibility-note" class="mt-1 text-sm leading-5">Drafts are visible only to your team.</p>
+                </div>
+              </section>
+
+              <section class="panel overflow-hidden">
+                <div class="border-b border-espresso/10 p-4">
+                  <h2 class="section-title">Live preview</h2>
+                  <p class="section-subtitle">A quick look at the product card.</p>
+                </div>
+                <div class="p-4">
+                  <div class="overflow-hidden rounded-xl bg-cream">
+                    <img id="preview-image" alt="Product preview" class="aspect-[4/5] w-full object-cover" src="https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=500&q=80">
+                  </div>
+                  <p id="preview-category" class="mt-4 text-xs uppercase tracking-[.14em] text-espresso/50">New collection</p>
+                  <h3 id="preview-name" class="mt-1 font-display text-2xl font-semibold">Your product name</h3>
+                  <p id="preview-price" class="mt-1 text-sm font-semibold tabular-nums">₦0.00</p>
+                  <p id="preview-description" class="mt-2 line-clamp-3 text-sm leading-5 text-espresso/60">Your product description will appear here.</p>
+                </div>
+              </section>
+
+              <section class="panel p-4 sm:p-5">
+                <h2 class="section-title">Record details</h2>
+                <dl class="mt-4 space-y-3 text-sm">
+                  <div class="flex justify-between gap-3"><dt class="text-espresso/55">Created</dt><dd id="meta-created">New product</dd></div>
+                  <div class="flex justify-between gap-3"><dt class="text-espresso/55">Last updated</dt><dd id="meta-updated">Not saved yet</dd></div>
+                </dl>
+                <button id="duplicate-product" class="btn-secondary mt-5 w-full" type="button">Duplicate product</button>
+                <button id="delete-product" class="btn-danger mt-2 hidden w-full" type="button">Delete product</button>
+              </section>
+            </aside>
+          </div>
+
+          <div class="sticky-action-bar">
+            <a href="products.html" class="btn-ghost">Discard</a>
+            <div class="ml-auto flex gap-2">
+              <button id="save-draft" class="btn-secondary" type="button">Save draft</button>
+              <button id="publish-product" class="btn-primary" type="submit">Publish</button>
+            </div>
+          </div>
+        </form>
+      </section>
+    </main>
+  </div>
+
+  <script src="assets/data.js"></script>
+  <script src="assets/store.js"></script>
+  <script src="assets/auth.js"></script>
+  <script src="assets/ui.js"></script>
+  <script src="assets/layout.js"></script>
+  <script src="assets/pages/product-form.js"></script>
+</body>
+</html>

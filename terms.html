@@ -1,0 +1,650 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f8f5f0">
+  <meta name="description" content="Read the Terms of Service for Aurelle Studio.">
+  <title>Terms of Service | Aurelle Studio</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Cormorant+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --ivory: #f8f5f0;
+      --white: #ffffff;
+      --espresso: #30251f;
+      --muted: #81756d;
+      --clay: #b87961;
+      --border: #e7dfd6;
+      --soft: #eee6dc;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 30px;
+    }
+
+    body {
+      background: var(--ivory);
+      color: var(--espresso);
+      font-family: "DM Sans", sans-serif;
+      line-height: 1.8;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    a:hover {
+      color: var(--clay);
+    }
+
+    .announcement {
+      background: var(--espresso);
+      color: white;
+      text-align: center;
+      padding: 9px 15px;
+      font-size: 11px;
+      letter-spacing: 1.6px;
+      text-transform: uppercase;
+    }
+
+    header {
+      background: var(--ivory);
+      border-bottom: 1px solid var(--border);
+      padding: 20px 6%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .logo {
+      font-family: "Cormorant Garamond", serif;
+      font-size: 31px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      white-space: nowrap;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      font-size: 12px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 17px;
+      font-size: 13px;
+      white-space: nowrap;
+    }
+
+    .hero {
+      padding: 70px 6% 55px;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+      background: linear-gradient(135deg, #f8f5f0 0%, #eee6dc 100%);
+    }
+
+    .eyebrow {
+      color: var(--clay);
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    h1,
+    h2 {
+      font-family: "Cormorant Garamond", serif;
+      font-weight: 500;
+      line-height: 1.2;
+    }
+
+    h1 {
+      font-size: clamp(42px, 6vw, 66px);
+      margin-bottom: 14px;
+    }
+
+    .hero p {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .breadcrumb {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 25px 6% 0;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .content-layout {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 35px 6% 90px;
+      display: grid;
+      grid-template-columns: 245px minmax(0, 1fr);
+      gap: 60px;
+      align-items: start;
+    }
+
+    .contents {
+      position: sticky;
+      top: 25px;
+      background: var(--white);
+      border: 1px solid var(--border);
+      padding: 25px 22px;
+    }
+
+    .contents h2 {
+      font-size: 25px;
+      margin-bottom: 16px;
+    }
+
+    .contents ol {
+      padding-left: 18px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 2.2;
+    }
+
+    .contents a:hover {
+      color: var(--clay);
+    }
+
+    .terms-content {
+      min-width: 0;
+      background: var(--white);
+      border: 1px solid var(--border);
+      padding: clamp(25px, 4vw, 48px);
+    }
+
+    .intro {
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 35px;
+      padding-bottom: 28px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .terms-section {
+      margin-bottom: 32px;
+      scroll-margin-top: 20px;
+    }
+
+    .terms-section:last-child {
+      margin-bottom: 0;
+    }
+
+    .terms-section h2 {
+      font-size: 29px;
+      margin-bottom: 12px;
+    }
+
+    .terms-section p {
+      color: #62564e;
+      font-size: 13px;
+      margin-bottom: 12px;
+    }
+
+    .terms-section ul {
+      color: #62564e;
+      padding-left: 22px;
+      font-size: 13px;
+      margin: 8px 0 14px;
+    }
+
+    .terms-section li {
+      margin-bottom: 7px;
+    }
+
+    .contact-card {
+      background: var(--soft);
+      padding: 22px;
+      margin-top: 18px;
+    }
+
+    .contact-card p {
+      margin-bottom: 5px;
+    }
+
+    .contact-card a {
+      color: var(--clay);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    footer {
+      background: var(--espresso);
+      color: white;
+      padding: 45px 6% 25px;
+    }
+
+    .footer-inner {
+      max-width: 1200px;
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 30px;
+      flex-wrap: wrap;
+    }
+
+    .footer-brand {
+      font-family: "Cormorant Garamond", serif;
+      font-size: 28px;
+      letter-spacing: 2px;
+    }
+
+    .footer-copy {
+      color: #d0c4bb;
+      font-size: 12px;
+      margin-top: 8px;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      font-size: 11px;
+    }
+
+    .footer-links a:hover {
+      color: #d7aa96;
+    }
+
+    .copyright {
+      max-width: 1200px;
+      margin: 30px auto 0;
+      padding-top: 20px;
+      border-top: 1px solid #ffffff25;
+      color: #c7bcb3;
+      font-size: 11px;
+    }
+
+    @media (max-width: 850px) {
+      header {
+        flex-wrap: wrap;
+      }
+
+      nav {
+        order: 3;
+        width: 100%;
+        justify-content: center;
+        gap: 20px;
+      }
+
+      .content-layout {
+        grid-template-columns: 1fr;
+        gap: 25px;
+      }
+
+      .contents {
+        position: static;
+      }
+
+      .contents ol {
+        columns: 2;
+        column-gap: 25px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      header {
+        padding: 16px 5%;
+      }
+
+      .logo {
+        font-size: 25px;
+      }
+
+      nav {
+        gap: 12px;
+        font-size: 10px;
+      }
+
+      .header-actions {
+        gap: 10px;
+        font-size: 11px;
+      }
+
+      .hero {
+        padding: 50px 5% 40px;
+      }
+
+      .breadcrumb {
+        padding-left: 5%;
+        padding-right: 5%;
+      }
+
+      .content-layout {
+        padding: 25px 5% 60px;
+      }
+
+      .contents ol {
+        columns: 1;
+      }
+
+      .terms-content {
+        padding: 24px 20px;
+      }
+
+      .terms-section h2 {
+        font-size: 26px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="announcement">Thoughtfully chosen. Beautifully worn.</div>
+
+  <header>
+    <a href="index.html" class="logo">AURELLE STUDIO</a>
+
+    <nav aria-label="Main navigation">
+      <a href="index.html">Home</a>
+      <a href="shop.html">Shop</a>
+      <a href="about.html">Our Story</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+
+    <div class="header-actions">
+      <a href="wishlist.html">♡ Wishlist</a>
+      <a href="cart.html">Bag</a>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="eyebrow">The details matter</div>
+    <h1>Terms of Service</h1>
+    <p>Last updated: October 15, 2026</p>
+  </section>
+
+  <div class="breadcrumb">
+    <a href="index.html">Home</a> / Terms of Service
+  </div>
+
+  <main class="content-layout">
+    <aside class="contents" aria-label="Terms of service contents">
+      <h2>On this page</h2>
+      <ol>
+        <li><a href="#acceptance">Acceptance of Terms</a></li>
+        <li><a href="#eligibility">Eligibility</a></li>
+        <li><a href="#products">Products & Availability</a></li>
+        <li><a href="#orders">Orders & Acceptance</a></li>
+        <li><a href="#pricing">Pricing & Payment</a></li>
+        <li><a href="#delivery">Shipping & Delivery</a></li>
+        <li><a href="#returns">Returns & Exchanges</a></li>
+        <li><a href="#account">Accounts & Security</a></li>
+        <li><a href="#conduct">Acceptable Use</a></li>
+        <li><a href="#intellectual-property">Intellectual Property</a></li>
+        <li><a href="#liability">Liability</a></li>
+        <li><a href="#privacy">Privacy</a></li>
+        <li><a href="#changes">Changes to Terms</a></li>
+        <li><a href="#contact">Contact Us</a></li>
+      </ol>
+    </aside>
+
+    <article class="terms-content">
+      <p class="intro">
+        Welcome to Aurelle Studio. These Terms of Service explain the terms
+        that apply when you visit our website, browse our collections, or
+        purchase our products. Please read them carefully before placing an
+        order. By using this website, you agree to these terms.
+      </p>
+
+      <section class="terms-section" id="acceptance">
+        <h2>1. Acceptance of Terms</h2>
+        <p>
+          By accessing or using the Aurelle Studio website, you acknowledge
+          that you have read and understood these Terms of Service and agree
+          to be bound by them. If you do not agree, please discontinue use of
+          the website.
+        </p>
+      </section>
+
+      <section class="terms-section" id="eligibility">
+        <h2>2. Eligibility</h2>
+        <p>
+          You must be legally able to enter into a binding agreement under the
+          laws applicable to you to place an order. If you are under the age
+          of majority in your location, you should use this website only with
+          the involvement and consent of a parent or legal guardian.
+        </p>
+      </section>
+
+      <section class="terms-section" id="products">
+        <h2>3. Products and Availability</h2>
+        <p>
+          We aim to display our products, colours, sizes, materials, and
+          descriptions as accurately as possible. However, screen settings
+          and photography may cause slight variations in how products appear.
+        </p>
+        <p>
+          Product availability may change without notice. We reserve the
+          right to limit quantities, discontinue products, or correct
+          listing errors where permitted by applicable law.
+        </p>
+      </section>
+
+      <section class="terms-section" id="orders">
+        <h2>4. Orders and Acceptance</h2>
+        <p>
+          When you place an order, you are submitting a purchase request.
+          An order confirmation message acknowledges receipt of your request
+          and does not necessarily mean that the order has been accepted.
+        </p>
+        <p>
+          We may contact you to verify order details or address an issue. If
+          we cannot fulfil an order, we will communicate with you and arrange
+          any applicable refund for payment already received.
+        </p>
+        <p>
+          Please review your delivery address, selected sizes, quantities,
+          and contact details carefully before completing checkout.
+        </p>
+      </section>
+
+      <section class="terms-section" id="pricing">
+        <h2>5. Pricing and Payment</h2>
+        <p>
+          Prices and any applicable delivery fees will be shown during
+          checkout. Unless stated otherwise, prices are displayed in the
+          currency indicated on the website.
+        </p>
+        <p>
+          We take reasonable steps to ensure that pricing information is
+          correct. If a material pricing error affects your order, we may
+          contact you before proceeding or cancel the affected order where
+          permitted by law.
+        </p>
+        <p>
+          Payments must be made through the payment methods presented at
+          checkout. We do not intend to store full payment card details on
+          this website. Payment processing may be handled by third-party
+          payment providers under their own terms and privacy policies.
+        </p>
+      </section>
+
+      <section class="terms-section" id="delivery">
+        <h2>6. Shipping and Delivery</h2>
+        <p>
+          Estimated delivery times, shipping fees, and available delivery
+          areas should be displayed during checkout or on our Shipping &
+          Returns page. Delivery estimates are not guarantees unless
+          explicitly stated.
+        </p>
+        <p>
+          Delays may occur because of courier operations, weather, public
+          holidays, incorrect address information, or circumstances outside
+          our reasonable control.
+        </p>
+        <p>
+          Please ensure someone can receive the package at the delivery
+          address when required. Any applicable customs charges or other
+          additional fees should be explained before purchase where relevant.
+        </p>
+      </section>
+
+      <section class="terms-section" id="returns">
+        <h2>7. Returns, Refunds and Exchanges</h2>
+        <p>
+          Our return, refund, and exchange rules should be read together with
+          our Shipping & Returns policy. That policy should specify the
+          eligible return window, item condition requirements, excluded
+          products, return procedure, and refund processing method.
+        </p>
+        <p>
+          Nothing in these terms is intended to remove rights that cannot
+          legally be excluded under applicable consumer-protection laws.
+          Please contact us if an item arrives damaged, defective, or
+          materially different from what you ordered.
+        </p>
+      </section>
+
+      <section class="terms-section" id="account">
+        <h2>8. Customer Accounts and Security</h2>
+        <p>
+          If account registration is available, you are responsible for
+          providing accurate information and taking reasonable steps to
+          protect your sign-in credentials. Please notify us if you suspect
+          unauthorised use of your account.
+        </p>
+        <p>
+          We may restrict or suspend access where reasonably necessary to
+          protect customers, our services, or the security of the website,
+          subject to applicable law.
+        </p>
+      </section>
+
+      <section class="terms-section" id="conduct">
+        <h2>9. Acceptable Use</h2>
+        <p>You agree not to use the website to:</p>
+        <ul>
+          <li>Break any applicable law or infringe another person's rights.</li>
+          <li>Submit fraudulent orders or intentionally provide misleading information.</li>
+          <li>Interfere with website security, availability, or normal operation.</li>
+          <li>Attempt unauthorised access to accounts, systems, or customer data.</li>
+          <li>Copy, scrape, or reuse website content in a way that violates applicable rights or laws.</li>
+        </ul>
+      </section>
+
+      <section class="terms-section" id="intellectual-property">
+        <h2>10. Intellectual Property</h2>
+        <p>
+          Unless otherwise stated, the Aurelle Studio name, branding, website
+          design, product photography, written content, and other materials
+          displayed on this website are owned by or licensed to Aurelle
+          Studio.
+        </p>
+        <p>
+          You may browse the website and use it for personal, lawful shopping
+          purposes. You may not reproduce, distribute, modify, or commercially
+          exploit protected materials without prior permission, except where
+          applicable law allows it.
+        </p>
+      </section>
+
+      <section class="terms-section" id="liability">
+        <h2>11. Disclaimers and Liability</h2>
+        <p>
+          We aim to keep the website accurate, secure, and available, but we
+          cannot guarantee uninterrupted access or that every page will
+          always be free from errors.
+        </p>
+        <p>
+          To the extent permitted by applicable law, Aurelle Studio will not
+          be responsible for indirect or consequential losses arising from
+          use of the website. These terms do not exclude liability that
+          cannot legally be excluded or restricted, including any mandatory
+          consumer rights.
+        </p>
+      </section>
+
+      <section class="terms-section" id="privacy">
+        <h2>12. Privacy</h2>
+        <p>
+          Our handling of personal information is described in our
+          <a href="privacy.html"><u>Privacy Policy</u></a>.
+          By using the website, you acknowledge that you should review that
+          policy to understand what information may be collected, how it may
+          be used, and what choices may be available to you.
+        </p>
+      </section>
+
+      <section class="terms-section" id="changes">
+        <h2>13. Changes to These Terms</h2>
+        <p>
+          We may update these Terms of Service from time to time. The
+          updated version will be posted on this page with a revised
+          “Last updated” date. Changes will apply as permitted by applicable
+          law. We encourage you to review this page periodically.
+        </p>
+      </section>
+
+      <section class="terms-section" id="contact">
+        <h2>14. Contact Us</h2>
+        <p>
+          If you have questions about these terms, an order, or a product,
+          please contact Aurelle Studio using the details below.
+        </p>
+
+        <div class="contact-card">
+          <p><strong>Aurelle Studio Customer Care</strong></p>
+          <p>Email: <a href="mailto:hello@aurellestudio.com">hello@aurellestudio.com</a></p>
+          <p>Contact page: <a href="contact.html">Get in touch</a></p>
+        </div>
+
+        <p style="margin-top: 20px;">
+          These terms are a general website template and should be reviewed
+          for your business, location, payment methods, delivery arrangements,
+          and applicable laws before you publish them.
+        </p>
+      </section>
+    </article>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <div>
+        <a href="index.html" class="footer-brand">AURELLE STUDIO</a>
+        <p class="footer-copy">Considered pieces for everyday elegance.</p>
+      </div>
+
+      <div class="footer-links">
+        <a href="shop.html">Shop</a>
+        <a href="about.html">Our Story</a>
+        <a href="contact.html">Contact</a>
+        <a href="shipping-returns.html">Shipping & Returns</a>
+        <a href="wishlist.html">Wishlist</a>
+        <a href="privacy.html">Privacy Policy</a>
+      </div>
+    </div>
+
+    <div class="copyright">
+      © <span id="year"></span> Aurelle Studio. All rights reserved.
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
